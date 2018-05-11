@@ -1,30 +1,26 @@
 #include <iostream>
 #include <string>
-#include <cstdio>
-#include <limits>
 using namespace std;
 
 int main(){
     int tc;
     cin>>tc;
-    for(int i=0; i<tc; i++){
-	int k, costmap[256]={0}, lines, cost;
+    while(tc--){
+	int k, costmap[500]={0}, lines, cost;
 	double totcost=0;
-	unsigned char c;
-	string line;
+	string line, s;
 	cin>>k;
-	for(int j=0; j<k; j++){
-	    scanf("%hhu", &c);
-	    scanf("%i", &cost);
-	    costmap[c] = cost;
+	while(k--){
+	    cin>>s>>cost;
+	    costmap[int(s[0])+128]=cost;
 	}
 	
-	lines=cin.get();
+	cin>>lines;
 	cin.ignore();
-	for(int j=0; j<lines; j++){
+	while(lines--){
 	    getline(cin, line);
-	    for(int l=0; line[l]!='\n' && line[l]!='\r'; l++){
-		totcost += costmap[line[l]];
+	    for(int l=0; l<line.length(); l++){
+		totcost += costmap[line[l]+128];
 	    }
 	}
 	cout.precision(2);
