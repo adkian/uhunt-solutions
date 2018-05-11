@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cstdio>
 #include <limits>
 using namespace std;
 
@@ -9,20 +10,21 @@ int main(){
     for(int i=0; i<tc; i++){
 	int k, costmap[256]={0}, lines, cost;
 	double totcost=0;
-	char c, line[10000];
-	
+	unsigned char c;
+	string line;
 	cin>>k;
 	for(int j=0; j<k; j++){
-	    cin>>c>>cost;
-	    costmap[c+128] = cost;
+	    scanf("%hhu", &c);
+	    scanf("%i", &cost);
+	    costmap[c] = cost;
 	}
 	
-	cin>>lines;
+	lines=cin.get();
 	cin.ignore();
 	for(int j=0; j<lines; j++){
-	    cin.get(line, 10000);
+	    getline(cin, line);
 	    for(int l=0; line[l]!='\n' && line[l]!='\r'; l++){
-		totcost += costmap[line[l]+128];
+		totcost += costmap[line[l]];
 	    }
 	}
 	cout.precision(2);
