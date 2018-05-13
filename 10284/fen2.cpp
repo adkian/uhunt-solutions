@@ -4,7 +4,7 @@ using namespace std;
 
 void addattack(int, int, int[][8]);
 void addbishopattack(int, int, int[][8]);
-
+void addrookattack(int i, int j, int board[][8]);
 int main(){
     string fen;
 
@@ -49,13 +49,13 @@ void addattack(int i, int j, int board[][8]){
     //PAWNS
     if(board[i][j]==112){ //p
 	if(i+1<8 && j-1>=0 && board[i+1][j-1]==0)
-	    board[i+1][i-1]=1;
+	    board[i+1][j-1]=1;
 	if(i+1<8 && j+1<=7 && board[i+1][j+1]==0)
 	    board[i+1][j+1]=1;
     }
     else if(board[i][j]==80){//P
 	if(i-1>=0 && j+1<=7 && board[i-1][j+1]==0)
-	    board[i-1][j+1]=0;
+	    board[i-1][j+1]=1;
 	if(i-1>=0 && j-1>=0 && board[i-1][j-1]==0)
 	    board[i-1][j-1]=1;
     }
@@ -95,6 +95,16 @@ void addattack(int i, int j, int board[][8]){
 	addbishopattack(i, j, board);
     }
 
+    //ROOKS
+    else if(board[i][j]==114 || board[i][j]==82){
+	addrookattack(i, j, board);
+    }
+
+    //QUEEN
+    else if(board[i][j]==81 || board[i][j]==113){
+	addrookattack(i, j, board);
+	addbishopattack(i, j, board);
+    }
 }
 
 
@@ -103,7 +113,7 @@ void addbishopattack(int i, int j, int board[][8]){
     int trow=i, tcol=j;
     while(!conf){
 	tcol++;trow++;
-	if(tcol>=8 || trow>=8 || (board[trow][tcol]!=0 && board[trow][tcol]!=1))
+	if(tcol>=8 || trow>=8 || board[trow][tcol]>1)
 	    conf=true;
 	else board[trow][tcol]=1;
     }
@@ -112,7 +122,7 @@ void addbishopattack(int i, int j, int board[][8]){
     trow=i;tcol=j;
     while(!conf){
 	tcol++;trow--;
-	if(tcol>=8 || trow<0 || (board[trow][tcol]!=0 && board[trow][tcol]!=1))
+	if(tcol>=8 || trow<0 || board[trow][tcol]>1)
 	    conf=true;
 	else board[trow][tcol]=1;
     }
@@ -121,7 +131,7 @@ void addbishopattack(int i, int j, int board[][8]){
     trow=i; tcol=j;
     while(!conf){
 	tcol--;trow--;
-	if(tcol<0 || trow<0 || (board[trow][tcol]!=0 && board[trow][tcol]!=1))
+	if(tcol<0 || trow<0 || board[trow][tcol]>1)
 	    conf=true;
 	else board[trow][tcol]=1;
     }
@@ -130,7 +140,46 @@ void addbishopattack(int i, int j, int board[][8]){
     trow=i; tcol=j;
     while(!conf){
 	tcol--;trow++;
-	if(tcol<0 || trow>=8 || (board[trow][tcol]!=0 && board[trow][tcol]!=1))
+	if(tcol<0 || trow>=8 || board[trow][tcol]>1)
+	    conf=true;
+	else board[trow][tcol]=1;
+    }
+}
+
+void addrookattack(int i, int j, int board[][8]){
+    bool conf=false;
+    
+    int trow=i, tcol=j;
+    while(!conf){
+	trow++;
+	if(trow>=8 || board[trow][tcol]>1)
+	    conf=true;
+	else board[trow][tcol]=1;
+    }
+    
+    conf=false;
+    trow=i; tcol=j;
+    while (!conf){
+	trow--;
+	if(trow<0 || board[trow][tcol]>1)
+	    conf=true;
+	else board[trow][tcol]=1;
+    }
+    
+    conf=false;
+    trow=i; tcol=j; 
+    while (!conf){
+	tcol++;
+	if(tcol>=8 || board[trow][tcol]>1)
+	    conf=true;
+	else board[trow][tcol]=1;
+    }
+    
+    conf=false;
+    trow=i;tcol=j;
+    while (!conf){
+	tcol--;
+	if(tcol<0 || board[trow][tcol]>1)
 	    conf=true;
 	else board[trow][tcol]=1;
     }
