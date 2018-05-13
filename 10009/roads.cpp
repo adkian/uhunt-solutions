@@ -5,6 +5,7 @@
 #include <stack>
 using namespace std;
 
+bool print_path(int [][26], int start, int dest, string &path, bool visited[]);
 int main(){
     int tc;
     cin>>tc;
@@ -22,41 +23,48 @@ int main(){
 	    map[c1][c2] = 1;
 	    map[c2][c1] = 1;
 	}       
-	
+
 	while(q--){
-	    string path="";
+	    string path=""; int i=0;bool viz[26];
 	    cin>>city1>>city2;
 	    c1 = (int)city1[0] % 65;
 	    c2 = (int)city2[0] % 65;
 
-	    //BFS 
-	    bool visited[26]={false};
-	    stack<int> s;
-	    stack<string> p;
-	    int start = c1;
-	    string c;	    
-	    s.push(start);
-	    
-	    c = char(s.top()+65);
-	    p.push(c);
-	    p.push(c);
-	    while(s.top()!=c2){		
-		start = s.top();
-		s.pop();
-		visited[start]=true;	       
-		for(int i=0; i<26; i++)
-		    if(start!=i && map[start][i]==1 && !visited[i])
-			    s.push(i);
-	    }
-	    
-	    // for(int i=0; i<s.size(); i++){
-	    // 	c= char(s.top()+65);
-	    // 	path+=c;
-	    // 	s.pop();
-	    // }
-	    
+	    print_path(map, c1, c2, path, viz);
 	    cout<<path<<endl;
-	} 	
+	}
     }
 }
 
+bool print_path(int map[26][26], int start, int dest, string &path, bool visited[]){
+    if(start==dest){
+	path+=char(start+65);
+	return true;
+   }
+    else{
+	visited[start]=true;
+	for(int j=0; j<26; j++){
+	    if(map[start][j]==1 && visited[j]==false){
+		visited[j]=true;
+		if(print_path(map, j, dest, path, visited) == true){
+		    path+=char(start+65);
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }
+}
+
+/*
+
+FIND(dest, node)
+  if node == dest:
+    path+=node
+    return true
+  else
+    for node in unvisited(node.pi)
+      visited[node]=true
+      if(FIND(dest, node))
+        path+=node  
+*/
