@@ -1,11 +1,13 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <queue>
+#include <sstream>
 using namespace std;
 
 int get_dist(string a, string b);
 void make_graph(vector<string> wlist, int map[][200]);
-bool get_pathlen(int map[][200], vector<string> wlist, int start, int dest, string &path, bool visited[]);
+int bfs(int map[][200], int start, int dest, int s);
 
 int main(){
     int tc;
@@ -19,44 +21,66 @@ int main(){
 	    wlist.push_back(w);
 	}
 	make_graph(wlist, map);
+	cin.ignore();
 	
-	string s1, s2;
-	while(cin>>s1>>s2){
+	string line, s1, s2;
+	getline(cin, line);
+	while(line!=""){
 	    int l1, l2;
+	    istringstream iss(line);
+	    iss>>s1>>s2;
+
 	    for(int i=0; i<wlist.size(); i++){
 		if(wlist[i]==s1)
 		    l1 = i;
 		else if(wlist[i]==s2)
 		    l2 = i;
 	    }
-	    int len = 0;
-	    bool visited[200];
-	    string path;
-	    get_pathlen(map, wlist, l1, l2, path, visited);
-	    cout<<s1<<" "<<s2<<" "<<path.length()-1<<endl;
+	    
+	    cout<<s1<<" "<<s2<<" "<<bfs(map, l1, l2, wlist.size())<<"\n";
+	    getline(cin, line);	    
 	}
     }
 }
 
-bool get_pathlen(int map[][200], vector<string> wlist, int start, int dest, string &path, bool visited[]){
-    if(start==dest){
-	path+="a";
-	return true;
-   }
-    else{
-	visited[start]=true;
-	for(int j=0; j<26; j++){
-	    if(map[start][j]==1 && visited[j]==false){
-		visited[j]=true;
-		if(get_pathlen(map, wlist, j, dest, path, visited) == true){
-		    path+="a";
-		    return true;
-		}
-	    }
+/*
+pred=[] pred list
+q=[] queue
+q.add(startnode)
+
+while !q.empty
+  node_A = dequeue q
+  for each unvisited node_B adj to node_A
+    pred[node_B]=node_A
+    q.add(node_B)    
+ */
+
+int bfs(int map[][200], int start, int dest, int s){
+    queue<int> q;
+    int pred[200], n;
+    bool visited[200] = {false};
+    
+    q.push(start);
+    while(!q.empty()){
+	n = q.front();
+	q.pop();
+	for(int i=0; i<s; i++){
+	    if(visited[i]==false && map[n][i]==1){
+		q.push(i);
+		visited[i]=true;
+		pred[i]=n;
+	    }		
 	}
-	return false;
     }
+
+    int len = 0, k=dest;    
+    while(k!=start){
+	k = pred[k];
+	len++;
+    }
+    return len;
 }
+
 void make_graph(vector<string> wlist, int map[][200]){
     for(int i=0; i<wlist.size(); i++)
 	for(int j=0; j<wlist.size(); j++)
