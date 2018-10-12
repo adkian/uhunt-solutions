@@ -2,7 +2,7 @@
 #include <vector>
 
 //simple bubble sort for now, change later
-vector<int> sort(vector<int> nums){
+std::vector<int> sort(std::vector<int> nums){
     int j, sorted = 0, temp;
     while(0 == sorted){
 	sorted = 1;
@@ -22,22 +22,27 @@ vector<int> sort(vector<int> nums){
 int main(){
     int n;
     while(std::cin>>n){
-	vector<int> nums, sorted, pos;
+	std::vector<int> nums, sorted;
 	int num;       
 	while(n--){
 	    std::cin>>num;
 	    nums.push_back(num);
 	}
 	sorted = sort(nums);
-
-	int nums_idex=0; 
-	for(int sort_idex=0;
-	    i<sorted.size() && nums_idex < sorted.size(); i++){
-	    if(sorted[sort_idex] == nums[nums_idex]){
-		pos.push_back(nums_idex - sort_idex);
-		nums_idex++;
+	
+	int mark[1000] = {0};
+	int pos[1000] = {0};
+	
+	for(int i=0; i<nums.size(); i++){
+	    for(int j=0; j<sorted.size(); j++){
+		if(nums[i]==sorted[j] && mark[j]!=1){
+		    pos[i] = j - i;
+		    mark[j] = 1;
+		    break;
+		}
 	    }
 	}
-	
+	//
+	std::cout<<"\n";
     }
 }
