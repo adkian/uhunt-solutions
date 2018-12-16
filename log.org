@@ -1,0 +1,6 @@
+#+STARTUP: indent content
+#+TODO: TODO WORKING VERIFY | DONE
+
+* TODO 146
+- 
+
