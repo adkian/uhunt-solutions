@@ -5,8 +5,8 @@
 #include <sstream>
 using namespace std;
 
-int get_dist(string a, string b);
-void make_graph(vector<string> wlist, int map[][200]);
+void makeGraph(vector<string> wlist, int map[][200]);
+int getDist(string a, string b);
 int bfs(int map[][200], int start, int dest, int s);
 
 int main(){
@@ -15,31 +15,36 @@ int main(){
     while(tc--){
 	string w="";
 	vector<string> wlist;
-	int map[200][200];
+	int map[200][200] = {0};
+	cin>>w;
 	while(w!="*"){
-	    cin>>w;
 	    wlist.push_back(w);
+	    cin>>w;
 	}
-	make_graph(wlist, map);
+	makeGraph(wlist, map);
 	cin.ignore();
 	
 	string line, s1, s2;
 	getline(cin, line);
 	while(line!=""){
-	    int l1, l2;
+	    int l1, l2; /* indices to words in map */
 	    istringstream iss(line);
 	    iss>>s1>>s2;
 
 	    for(int i=0; i<wlist.size(); i++){
 		if(wlist[i]==s1)
 		    l1 = i;
-		else if(wlist[i]==s2)
+		if(wlist[i]==s2)
 		    l2 = i;
 	    }
-	    
-	    cout<<s1<<" "<<s2<<" "<<bfs(map, l1, l2, wlist.size())<<"\n";
+	    int dist;
+
+	    dist = bfs(map, l1, l2, wlist.size());
+	    cout<<s1<<" "<<s2<<" "<<dist<<"\n";
 	    getline(cin, line);	    
 	}
+	if(tc>0)
+	    cout<<endl;
     }
 }
 
@@ -58,7 +63,7 @@ while !q.empty
 int bfs(int map[][200], int start, int dest, int s){
     queue<int> q;
     int pred[200], n;
-    bool visited[200] = {false};
+    bool visited[200] = {false};    
     
     q.push(start);
     while(!q.empty()){
@@ -81,21 +86,32 @@ int bfs(int map[][200], int start, int dest, int s){
     return len;
 }
 
-void make_graph(vector<string> wlist, int map[][200]){
+void makeGraph(vector<string> wlist, int map[][200]){    
     for(int i=0; i<wlist.size(); i++)
 	for(int j=0; j<wlist.size(); j++)
-	    if(i!=j && get_dist(wlist[i], wlist[j])==1){
+	    if(i!=j && getDist(wlist[i], wlist[j])==1){
 		map[i][j] = 1;
 		map[j][i] = 1;
 	    }
 }
 
-int get_dist(string a, string b){
+int getDist(string a, string b){
     int dist = 0;
-    int len = a.length();    
-    if(len == b.length())
-	for(int i=0; i<len; i++)
-	    if(a[i]!=b[i])
-		dist++;
+    string longer, shorter;
+
+    if(a.length() > b.length()){
+	longer = a;
+	shorter = b;
+    }
+    else{ /* Also accounts for equal length */
+	longer = b;
+	shorter = a;
+    }
+    dist += longer.length() - shorter.length();
+    
+    for(int i=0; i<shorter.length(); i++)
+	if(shorter[i]!=longer[i])
+	    dist+=1;
+
     return dist;
 }

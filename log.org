@@ -3,9 +3,12 @@
 
 * DONE 146
 - Supposed to be solved with cpp stl, perhaps a c implementation of next_permutation will be more exciting?
-* UNFINISHED 429
+* WORKING 429
 - Word transformation: looks like a graph problem
+  - Appears under 'easy BFS' 
 - Needs to be revisited
-* WORKING 12532
-- On uhunt this problem is put under a 'tree-related structures', but not sure how a tree might be useful in this case
-  - Attempting a (naive) linear array first to see if it works (half expecting it to fail on time limit)
+* UNFINISHED 12532
+- On uhunt this problem is put under 'tree-related structures', but not sure how a tree might be useful in this case
+  - A segment tree perhaps?
+- Attempting a (naive) linear array first to see if it works (half expecting it to fail on time limit)
+  - Failed on TLE
