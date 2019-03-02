@@ -3,7 +3,7 @@
 
 * DONE 146
 - Supposed to be solved with cpp stl, perhaps a c implementation of next_permutation will be more exciting?
-* WORKING 429
+* DONE 429
 - Word transformation: looks like a graph problem
   - Appears under 'easy BFS' 
 - Needs to be revisited
@@ -12,3 +12,6 @@
   - A segment tree perhaps?
 - Attempting a (naive) linear array first to see if it works (half expecting it to fail on time limit)
   - Failed on TLE
+* TODO 924
+- Involves finding the graph depth maximum number of nodes from a given node
+- BFS with keeping track of queue size at each depth
