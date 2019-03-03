@@ -13,5 +13,5 @@
 - Attempting a (naive) linear array first to see if it works (half expecting it to fail on time limit)
   - Failed on TLE
 * TODO 924
-- Involves finding the graph depth maximum number of nodes from a given node
-- BFS with keeping track of queue size at each depth
+- Involves finding the depth with maximum number of nodes from a given node
+- BFS with keeping track of queue sizes for each depth
