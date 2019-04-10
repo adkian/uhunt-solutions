@@ -27,8 +27,8 @@ int getNumUnique(queue<int>q){
 }
 
 bool inQueue(queue<int>q, int num){
-    int curr;
-    for(int i=0; i<q.size(); i++){
+    int curr, qsize = q.size();
+    for(int i=0; i<qsize; i++){
 	curr = q.front();
 	if(num == curr)
 	    return true;
@@ -69,9 +69,9 @@ int main(){
 	max_num_depth = 0;
 	max_num = 0;
 	
-	while(!q.empty()){	   
+	while(!q.empty()){
 	    curr_emp = q.front();
-	    visited[curr_emp] = 1;	    
+	    visited[curr_emp] = 1;
 	    if(emp_depth[curr_emp] > curr_depth){ /* depth increase */
 		curr_depth+=1;
 		curr_size = getNumUnique(q);
@@ -79,7 +79,7 @@ int main(){
 		    max_num_depth = curr_depth;
 		    max_num = curr_size;
 		}
-	    }	    
+	    }
 	    q.pop();
 	    
 	    for(int i=0; i<adj[curr_emp].size(); i++){
@@ -92,6 +92,7 @@ int main(){
 		}
 	    }
 	}
+	
 	if(max_num_depth == 0)
 	    cout<<"0\n";
 	else
