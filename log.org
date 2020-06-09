@@ -15,3 +15,10 @@
   - A segment tree perhaps?
 - Attempting a (naive) linear array first to see if it works (half expecting it to fail on time limit)
   - Failed on TLE
+* TODO 1203
+- Min priority queue with decrease-key
+* TODO 10954
+- Min priority queue, popping each element and adding it 
+- Adding up costs of a simple array would not work since adition of sums would not necespasarily be smallest (adding other sums to additions could be shortest)
+* TODO 11995
+- Would need all STL DS??
