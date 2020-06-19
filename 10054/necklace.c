@@ -12,7 +12,7 @@ bead *path;
 int adj[NUM_COLORS][NUM_COLORS] = {{0}};
 int path_counter = 0;
 
-int find_path(int x, int y, int curr)
+void find_path(int x, int y, int curr)
 {
     bead new_bead = {x, y};    
     path[path_counter++] = new_bead;
@@ -37,11 +37,12 @@ int find_path(int x, int y, int curr)
 	    }
 	}
     }
+    
     if (found==0)
-	return 0;
+	return;
     curr = (curr+1)%2;
     find_path(new_x, new_y, curr);
-    return 1;
+    return;
 }
 
 int main()
@@ -89,8 +90,8 @@ int main()
 	}
 	else {
 	    path_counter = 0;
-	    int k=find_path(start_x, start_y, 0);
-	    /* printf("find_path: %d\n", k); */
+	    find_path(start_y, start_x, 0);
+	    printf("path counter: %d\n", path_counter);
 	    for (int x = 0; x < path_counter; x++) {
 		if (x%2 != 0)
 		    printf("%d %d\n", path[x].c1+1, path[x].c2+1);

@@ -19,6 +19,13 @@
 - Min priority queue with decrease-key
 * TODO 10954
 - Min priority queue, popping each element and adding it 
-- Adding up costs of a simple array would not work since adition of sums would not necespasarily be smallest (adding other sums to additions could be shortest)
+- Adding up costs of a simple array would not work since adition of sums would not necessarily be smallest (adding other sums to additions could be shortest)
 * TODO 11995
 - Would need all STL DS??
+* TODO new probs
+** TODO 100235
+- Sieve of eratothenes
+** TODO 10140
+- 
+** TODO 11264
+- greedy algorithm, ch 16
